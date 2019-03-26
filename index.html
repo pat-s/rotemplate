@@ -96,9 +96,10 @@
 
 <p>rotemplate provides a custom pkgdown template for rOpenSci packages. Please don’t use it for your own package if it’s not an rOpenSci package (i.e. only use it for packages listed on <a href="https://ropensci.org/packages/" class="uri">https://ropensci.org/packages/</a>).</p>
 <p>Inspired by <a href="https://github.com/tidyverse/tidytemplate/">tidytemplate</a> and <a href="https://github.com/lockedatapublished/lockedatapkg">lockedatapkg</a>.</p>
-<div id="how-to-use" class="section level2">
+<div id="how-to-use-rotemplate" class="section level2">
 <h2 class="hasAnchor">
-<a href="#how-to-use" class="anchor"></a>How to use</h2>
+<a href="#how-to-use-rotemplate" class="anchor"></a>How to use <code>rotemplate</code>
+</h2>
 <div id="if-your-website-has-no-pkgdown-website-yet" class="section level3">
 <h3 class="hasAnchor">
 <a href="#if-your-website-has-no-pkgdown-website-yet" class="anchor"></a>If your website has no <code>pkgdown</code> website yet</h3>
@@ -106,6 +107,19 @@
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">usethis<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/usethis/topics/use_pkgdown">use_pkgdown</a></span>()</a></code></pre></div>
 <p>And to ensure your website will be automatically deployed from Travis, which we recommend,</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">usethis<span class="op">::</span><span class="kw">use_pkgdown_travis</span>()</a></code></pre></div>
+<p>Note that the setup that’ll be recommended by running the function above consists in updating the website on a gh-pages branch with every push, which might bloat your git history. If you want to avoid that, have a look at</p>
+<ul>
+<li>the <a href="https://github.com/ropensci/magick/blob/e8895c35df8a985212cc5b094a2aaad7389d029d/.travis.yml#L14">setup in <code>magick</code> repo</a>: the website is only built when there’s a GitHub release.</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="fu">deploy:</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="fu">provider:</span><span class="at"> script</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">  <span class="fu">script:</span><span class="at"> Rscript -e 'pkgdown::deploy_site_github()'</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">  <span class="fu">skip_cleanup:</span><span class="at"> true</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">  <span class="fu">on:</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">    <span class="fu">tags:</span><span class="at"> true</span></a></code></pre></div>
+<ul>
+<li>The <a href="https://github.com/ropensci/cyphr">Travis-free, Makefile-based setup in <code>cyphr</code> repo</a>. The gh-pages branch is created anew each time the website is updated. The website is built locally.</li>
+</ul>
 </div>
 <div id="in-all-cases" class="section level3">
 <h3 class="hasAnchor">
@@ -114,8 +128,8 @@
 <h4 class="hasAnchor">
 <a href="#tweak-the-pkgdown-config" class="anchor"></a>Tweak the <code>pkgdown</code> config</h4>
 <p>In your <code>pkgdown</code> config file make sure to add the following lines</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="fu">template:</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="fu">package:</span><span class="at"> rotemplate</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="fu">template:</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">  <span class="fu">package:</span><span class="at"> rotemplate</span></a></code></pre></div>
 </div>
 <div id="tweak-the-travis-config" class="section level4">
 <h4 class="hasAnchor">
@@ -127,10 +141,10 @@
 <h4 class="hasAnchor">
 <a href="#make-sure-the-website-has-a-favicon" class="anchor"></a>Make sure the website has a favicon</h4>
 <p>If your package has no logo of its own, use the rOpenSci hex by running the code below, but do not necessarily put it in the README as mentioned by <code>usethis</code> (your choice). This way the package website will have a favicon.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">usethis<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/usethis/topics/use_logo">use_logo</a></span>(<span class="st">"https://raw.githubusercontent.com/ropensci/logos/master/stickers/blue_short_hexsticker.png"</span>)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co"># but do not necessarily put it in the README as mentioned by `usethis`,</span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co"># your call!</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">pkgdown<span class="op">::</span><span class="kw"><a href="https://pkgdown.r-lib.org/reference/build_favicon.html">build_favicon</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">usethis<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/usethis/topics/use_logo">use_logo</a></span>(<span class="st">"https://raw.githubusercontent.com/ropensci/logos/master/stickers/blue_short_hexsticker.png"</span>)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co"># but do not necessarily put it in the README as mentioned by `usethis`,</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co"># your call!</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">pkgdown<span class="op">::</span><span class="kw"><a href="https://pkgdown.r-lib.org/reference/build_favicon.html">build_favicon</a></span>()</a></code></pre></div>
 </div>
 </div>
 </div>
