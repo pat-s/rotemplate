@@ -90,7 +90,7 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <div id="rotemplate" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#rotemplate" class="anchor"></a>rotemplate <a href="https://ropenscilabs.github.io/rotemplate"><img src="reference/figures/logo.png" align="right" height="134.5"></a>
+<a href="#rotemplate" class="anchor"></a>rotemplate <a href="https://ropensci.github.io/rotemplate"><img src="reference/figures/logo.png" align="right" height="134.5"></a>
 </h1></div>
 <!-- badges: start -->
 
@@ -103,8 +103,9 @@
 <div id="if-your-website-has-no-pkgdown-website-yet" class="section level3">
 <h3 class="hasAnchor">
 <a href="#if-your-website-has-no-pkgdown-website-yet" class="anchor"></a>If your website has no <code>pkgdown</code> website yet</h3>
-<p>Run</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">usethis<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/usethis/topics/use_pkgdown">use_pkgdown</a></span>()</a></code></pre></div>
+<p>Run the code below to create a <code>pkgdown</code> config file that already uses the <code>rotemplate</code> package.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># remotes::install_github("ropenscilabs/rodev")</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">rodev<span class="op">::</span><span class="kw">use_ro_pkgdown</span>()</a></code></pre></div>
 <p>And to ensure your website will be automatically deployed from Travis, which we recommend,</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">usethis<span class="op">::</span><span class="kw">use_pkgdown_travis</span>()</a></code></pre></div>
 <p>Note that the setup that’ll be recommended by running the function above consists in updating the website on a gh-pages branch with every push, which might bloat your git history. If you want to avoid that, have a look at</p>
@@ -136,19 +137,18 @@
 <a href="#tweak-the--travis-yml-config" class="anchor"></a>Tweak the <code>.travis.yml</code> config</h4>
 <p>To <code>.travis.yml</code> add a command installing the package template, i.e. something like</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="fu">before_cache:</span><span class="at"> </span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">  <span class="fu">Rscript -e 'remotes:</span><span class="at">:install_cran("pkgdown");remotes::install_github("ropenscilabs/rotemplate").'</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-2" data-line-number="2">  <span class="fu">Rscript -e 'remotes:</span><span class="at">:install_cran("pkgdown");remotes::install_github("ropensci/rotemplate").'</span></a></code></pre></div>
 <p>Locally, if you want to build and preview the website, you’ll need to ensure that <code>rotemplate</code> is installed, and then build your website:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"ropenscilabs/rotemplate"</span>)</a>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"ropensci/rotemplate"</span>)</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2">pkgdown<span class="op">::</span><span class="kw"><a href="https://pkgdown.r-lib.org/reference/build_site.html">build_site</a></span>()</a></code></pre></div>
 </div>
 <div id="make-sure-the-website-has-a-favicon" class="section level4">
 <h4 class="hasAnchor">
 <a href="#make-sure-the-website-has-a-favicon" class="anchor"></a>Make sure the website has a favicon</h4>
-<p>If your package has no logo of its own, use the rOpenSci hex by running the code below, but do not necessarily put it in the README as mentioned by <code>usethis</code> (your choice). This way the package website will have a favicon.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">usethis<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/usethis/topics/use_logo">use_logo</a></span>(<span class="st">"https://raw.githubusercontent.com/ropensci/logos/master/stickers/blue_short_hexsticker.png"</span>)</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co"># but do not necessarily put it in the README as mentioned by `usethis`,</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co"># your call!</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">pkgdown<span class="op">::</span><span class="kw"><a href="https://pkgdown.r-lib.org/reference/build_favicon.html">build_favicon</a></span>()</a></code></pre></div>
+<p>If your package has no logo of its own, use the rOpenSci hex by running the code below, that will create a pkgdown/ folder with favicon files.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># remotes::install_github("ropenscilabs/rodev")</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">rodev<span class="op">::</span><span class="kw">use_ro_favicon</span>()</a></code></pre></div>
+<p>If your package has a logo, run <code><a href="https://www.rdocumentation.org/packages/usethis/topics/use_logo">usethis::use_logo()</a></code> with the path to it, and then <code><a href="https://pkgdown.r-lib.org/reference/build_favicon.html">pkgdown::build_favicon()</a></code>.</p>
 </div>
 </div>
 </div>
