@@ -159,3 +159,10 @@ a:focus, a:hover {
     line-height: 19px;
   }
 }
+
+@media screen and (max-width: 480px) {
+  .navbar .navbar-brand {
+    line-height: 19px;
+    margin-right: -150px;
+  }
+}
