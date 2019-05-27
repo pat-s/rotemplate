@@ -101,75 +101,30 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>rotemplate provides a custom pkgdown template for rOpenSci packages. Please don’t use it for your own package if it’s not an rOpenSci package (i.e. only use it for packages listed on <a href="https://ropensci.org/packages/" class="uri">https://ropensci.org/packages/</a>).</p>
+<p>rotemplate provides a custom pkgdown template for rOpenSci packages. We use this to render sites at <code>https://docs.ropensci.org</code>. Please don’t use it for your own package if it’s not an rOpenSci package (i.e. only use it for packages listed on <a href="https://ropensci.org/packages/" class="uri">https://ropensci.org/packages/</a>).</p>
 <p>Inspired by <a href="https://github.com/tidyverse/tidytemplate/">tidytemplate</a> and <a href="https://github.com/lockedatapublished/lockedatapkg">lockedatapkg</a>.</p>
 <div id="how-to-use-rotemplate" class="section level2">
 <h2 class="hasAnchor">
 <a href="#how-to-use-rotemplate" class="anchor"></a>How to use <code>rotemplate</code>
 </h2>
-<div id="if-your-website-has-no-pkgdown-website-yet" class="section level3">
-<h3 class="hasAnchor">
-<a href="#if-your-website-has-no-pkgdown-website-yet" class="anchor"></a>If your website has no <code>pkgdown</code> website yet</h3>
-<p>Run the code below to create a <code>pkgdown</code> config file that already uses the <code>rotemplate</code> package.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># remotes::install_github("ropenscilabs/rodev")</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">rodev<span class="op">::</span><span class="kw">use_ro_pkgdown</span>()</a></code></pre></div>
-<p>And to ensure your website will be automatically deployed from Travis, which we recommend,</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">usethis<span class="op">::</span><span class="kw">use_pkgdown_travis</span>()</a></code></pre></div>
-<p>Note that the setup that’ll be recommended by running the function above consists in updating the website on a gh-pages branch with every push, which might bloat your git history. If you want to avoid that, have a look at</p>
-<ul>
-<li>the <a href="https://github.com/ropensci/magick/blob/e8895c35df8a985212cc5b094a2aaad7389d029d/.travis.yml#L14">setup in <code>magick</code> repo</a>: the website is only built when there’s a GitHub release, which uses the following code in its <code>.travis.yml</code> file.</li>
-</ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="fu">deploy:</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="fu">provider:</span><span class="at"> script</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">  <span class="fu">script:</span><span class="at"> Rscript -e 'pkgdown::deploy_site_github()'</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">  <span class="fu">skip_cleanup:</span><span class="at"> true</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">  <span class="fu">on:</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">    <span class="fu">tags:</span><span class="at"> true</span></a></code></pre></div>
-<ul>
-<li>The <a href="https://github.com/ropensci/cyphr">Travis-free, Makefile-based setup in <code>cyphr</code> repo</a>. The gh-pages branch is created anew each time the website is updated. The website is built locally.</li>
-</ul>
+<p>Documentation rOpenSci packages will automatically be generated from your master branch and published to <a href="https://docs.ropensci.org" class="uri">https://docs.ropensci.org</a>. You don’t have to do anything to make this work. If you want to test your site locally use this:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">template &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">package =</span> <span class="st">"rotemplate"</span>)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">pkgdown<span class="op">::</span><span class="kw"><a href="https://pkgdown.r-lib.org/reference/build_site.html">build_site</a></span>(<span class="dt">devel =</span> <span class="ot">FALSE</span>, <span class="dt">override =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">template =</span> template))</a></code></pre></div>
+<p>Everything else can be configured as usual via the <code>_pkgdown.yml</code> file as described in the pkgdown documentation.</p>
+<p>If your website is not deploying or you run into another problem, please open an issue in the <a href="https://github.com/ropensci/docs">ropensci/docs</a> repository.</p>
 </div>
-<div id="in-all-cases" class="section level3">
-<h3 class="hasAnchor">
-<a href="#in-all-cases" class="anchor"></a>In all cases</h3>
-<div id="tweak-_pkgdown-yml-config" class="section level4">
-<h4 class="hasAnchor">
-<a href="#tweak-_pkgdown-yml-config" class="anchor"></a>Tweak <code>_pkgdown.yml</code> config</h4>
-<p>In your <code>_pkgdown.yml</code> config file make sure to add the following lines</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="fu">template:</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">  <span class="fu">package:</span><span class="at"> rotemplate</span></a></code></pre></div>
-</div>
-<div id="tweak-the--travis-yml-config" class="section level4">
-<h4 class="hasAnchor">
-<a href="#tweak-the--travis-yml-config" class="anchor"></a>Tweak the <code>.travis.yml</code> config</h4>
-<p>To <code>.travis.yml</code> add a command installing the package template, i.e. something like</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="fu">before_cache:</span><span class="at"> </span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">  <span class="fu">Rscript -e 'remotes:</span><span class="at">:install_cran("pkgdown");remotes::install_github("ropensci/rotemplate").'</span></a></code></pre></div>
-<p>Locally, if you want to build and preview the website, you’ll need to ensure that <code>rotemplate</code> is installed, and then build your website:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"ropensci/rotemplate"</span>)</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">pkgdown<span class="op">::</span><span class="kw"><a href="https://pkgdown.r-lib.org/reference/build_site.html">build_site</a></span>()</a></code></pre></div>
-</div>
-<div id="make-sure-the-website-has-a-favicon" class="section level4">
-<h4 class="hasAnchor">
-<a href="#make-sure-the-website-has-a-favicon" class="anchor"></a>Make sure the website has a favicon</h4>
-<p>If your package has no logo of its own, use the rOpenSci hex by running the code below, that will create a pkgdown/ folder with favicon files.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># remotes::install_github("ropenscilabs/rodev")</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">rodev<span class="op">::</span><span class="kw">use_ro_favicon</span>()</a></code></pre></div>
-<p>If your package has a logo, run <code>usethis::use_logo()</code> with the path to it, and then <code><a href="https://pkgdown.r-lib.org/reference/build_favicon.html">pkgdown::build_favicon()</a></code>.</p>
-</div>
-</div>
-</div>
-<div id="examples-in-the-wild" class="section level2">
+<div id="example-sites" class="section level2">
 <h2 class="hasAnchor">
-<a href="#examples-in-the-wild" class="anchor"></a>Examples “in the wild”</h2>
+<a href="#example-sites" class="anchor"></a>Example sites</h2>
 <ul>
-<li><p><a href="https://ropensci.github.io/cyphr/"><code>cyphr</code></a></p></li>
-<li><p><a href="https://ropensci.github.io/drake/"><code>drake</code></a></p></li>
-<li><p><a href="https://ropensci.github.io/riem/"><code>riem</code></a></p></li>
-<li><p><a href="https://ropensci.github.io/ropenaq/"><code>ropenaq</code></a></p></li>
-<li><p><a href="https://ropensci.github.io/rotl/"><code>rotl</code></a></p></li>
-<li><p><a href="https://ropensci.github.io/stplanr/"><code>stplanr</code></a></p></li>
+<li><p><a href="https://docs.ropensci.org/cyphr/"><code>cyphr</code></a></p></li>
+<li><p><a href="https://docs.ropensci.org/drake/"><code>drake</code></a></p></li>
+<li><p><a href="https://docs.ropensci.org/riem/"><code>riem</code></a></p></li>
+<li><p><a href="https://docs.ropensci.org/ropenaq/"><code>ropenaq</code></a></p></li>
+<li><p><a href="https://docs.ropensci.org/rotl/"><code>rotl</code></a></p></li>
+<li><p><a href="https://docs.ropensci.org/stplanr/"><code>stplanr</code></a></p></li>
 <li><p><a href="http://visdat.njtierney.com/"><code>visdat</code></a></p></li>
+<li><p><a href="https://docs.ropensci.org/magick/"><code>magick</code></a></p></li>
 </ul>
 </div>
 </div>
