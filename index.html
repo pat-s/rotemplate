@@ -105,6 +105,14 @@
 <a class="sourceLine" id="cb1-2" data-line-number="2">pkgdown<span class="op">::</span><span class="kw"><a href="https://pkgdown.r-lib.org/reference/build_site.html">build_site</a></span>(<span class="dt">devel =</span> <span class="ot">FALSE</span>, <span class="dt">override =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">template =</span> template))</a></code></pre></div>
 <p>Everything else can be configured as usual via the <code>_pkgdown.yml</code> file as described in the pkgdown documentation.</p>
 <p>If your website is not deploying or you run into another problem, please open an issue in the <a href="https://github.com/ropensci/docs">ropensci/docs</a> repository.</p>
+<div id="mathjax" class="section level3">
+<h3 class="hasAnchor">
+<a href="#mathjax" class="anchor"></a>Mathjax</h3>
+<p>if you want to use Mathjax you’ll need to specify it in the <code>pkgdown</code> config file like so:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="fu">template:</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="fu">params:</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">    <span class="fu">mathjax:</span><span class="at"> true</span></a></code></pre></div>
+</div>
 </div>
 <div id="example-sites" class="section level2">
 <h2 class="hasAnchor">
